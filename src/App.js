@@ -1,6 +1,6 @@
 
 import { Routes, Route } from "react-router-dom";
-import {Public, Home, Login, MyMusic} from "./containers/public";
+import {Public, Home, Login, MyMusic, Album} from "./containers/public";
 import path from "./utils/paths";
 import { useEffect } from "react";
 import * as actions from './store/actions'
@@ -18,7 +18,9 @@ function App() {
         <Route path={path.PUBLIC} element={<Public/>}>
             <Route path={path.HOME} element={<Home/>}/>
             <Route path={path.LOGIN} element={<Login/>}/>
-            <Route path={path.MY_MUSIC} element={<MyMusic/>}/>              
+            <Route path={path.MY_MUSIC} element={<MyMusic/>}/>     
+            <Route path={path.ALBUM__TITLE__ID} element={<Album/>}/>  
+            <Route path={path.PLAYLIST__TITLE__ID} element={<Album/>}/>         
         </Route>
       </Routes>
     </div>

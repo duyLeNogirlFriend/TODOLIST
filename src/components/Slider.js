@@ -3,15 +3,25 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getArrSlider } from '../utils/fn'
 import * as actions from '../store/actions'
-const Slider = () => {
+import { useNavigate } from 'react-router-dom'
 
+
+const Slider = () => {
 
     const {banner} = useSelector(state => state.app)
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const handleClickBanner = (item) => {      
         if(item?.type === 1){
             dispatch(actions.setCurrentSongId(item.encodeId))
             dispatch(actions.checkPlaying(true))
+            dispatch(actions.setPlayList(null))
+        } else if ( item?.type === 4){
+            const albumPath = item?.link?.split('.')[0] //tach phan duoi html ra
+            navigate(albumPath)
+        } else {
+            dispatch(actions.setPlayList(null))
         }
       
     }
@@ -47,7 +57,7 @@ const Slider = () => {
             })
             min = (min === sliderEls.length - 1) ? 0 : min + 1
             max = (max === sliderEls.length - 1) ? 0 : max + 1
-        }, 3000)
+        }, 10000)
         return () => {
             intervalId && clearInterval(intervalId)
         }
@@ -55,7 +65,7 @@ const Slider = () => {
 
     
     return (
-        <div className='flex gap-4 px-[60px] pt-8'>
+        <div className='flex gap-4 px-[60px] pt-8 cursor-pointer'>
             {banner?.map(item => (
                 <img key={item.encodeId} 
                 src={item.banner} 

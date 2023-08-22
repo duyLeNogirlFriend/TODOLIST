@@ -1,8 +1,10 @@
-import {BsMusicNoteList,BsDisc, BsThreeDots, BsRepeat, BsPlayCircle, BsPauseCircle } from 'react-icons/bs'
+import {BsMusicNoteList,BsDisc, BsThreeDots, BsRepeat, BsPlayCircle, BsPauseCircle, BsDot } from 'react-icons/bs'
 import {AiOutlineLineChart, AiOutlineHeart, AiFillHeart} from 'react-icons/ai'
-import {MdOutlineNotes, MdSkipNext, MdSkipPrevious} from 'react-icons/md'
+import {MdOutlineNotes, MdSkipNext, MdSkipPrevious, MdOutlineNavigateNext} from 'react-icons/md'
 import {LiaLongArrowAltLeftSolid, LiaLongArrowAltRightSolid, LiaRandomSolid} from 'react-icons/lia'
+import {CiMusicNote1} from 'react-icons/ci'
 import {GoSearch} from 'react-icons/go'
+import {TbArrowsSort} from 'react-icons/tb'
 const icons = {
     BsMusicNoteList,
     BsDisc,
@@ -19,6 +21,11 @@ const icons = {
     MdSkipPrevious,
     BsPlayCircle,
     LiaRandomSolid,
-    BsPauseCircle
+    BsPauseCircle,
+    CiMusicNote1,
+    TbArrowsSort,
+    BsDot,
+    MdOutlineNavigateNext
+    
 }
 export default icons;

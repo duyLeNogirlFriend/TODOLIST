@@ -1,16 +1,14 @@
 import React from 'react'
-import { Header, Slider } from '../../components'
+import { Header, Slider, Section } from '../../components'
 import * as apis from '../../apis'
 import { useEffect } from 'react'
 
 const Home = () => {
 
   return (
-    <div className='overflow-y-auto '>
-      <div className='h-[70px] px-[60px] flex items-center'>
-        <Header/>       
-      </div>
+    <div className='overflow-y-auto '>   
       <Slider/>
+      <Section/>
     </div>
   )
 }
