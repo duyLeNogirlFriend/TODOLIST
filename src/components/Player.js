@@ -77,6 +77,17 @@ const Player = () => {
             }
     }, [audio, isPlaying]) 
 
+    useEffect( () => {
+        const handleEnded = () => {
+            handleNextClick()
+        }
+        audio.addEventListener('ended', handleEnded)
+
+        return () => {
+            audio.removeEventListener('ended', handleEnded)
+        }
+    }, [audio])
+
 
     const handleTooglePlay = () => {
         if(isPlaying){
@@ -118,10 +129,18 @@ const Player = () => {
         } 
     };
 
+    //random click
     const handleRandomClick = () => {
+        if(!isRandom){
+            const randomIndex = Math.round(Math.random() * songs?.length) - 1
+            dispatch(actions.setCurrentSongId(songs[randomIndex].encodeId))
+            actions.checkPlaying(true)
+        }
         setIsRandom(!isRandom)
     }
     
+
+    //repeat click 
     const handleRepeatClick = () => {
         setIsRepeated(!isRepeated)
     }

@@ -13,15 +13,18 @@ const Public = () => {
 
             <div className='flex-auto'>
               <div className='h-[70px] px-[60px] flex items-center mb-5'>
-                <Header />
+                <Header />        
               </div>
-              <Outlet/>
+              <Outlet/> 
+              <div className='w-full h-[1000px]'></div>            
             </div>
             
             <div className='w-[330px] hidden 1600:flex flex-none animate-slide-right'>
               <SideBarRight/>
-            </div>     
+            </div>    
+             
          </div>
+
          <div className='flex-none h-[90px] bottom-0 w-full right-0 fixed bg-main-400'>
             <Player/>
          </div>

@@ -12,8 +12,8 @@ const appReducer = (state = initState, action ) => {
                 ...state,
                 banner: action.homeData?.find(item => item.sectionId === 'hSlider')?.items || null, 
                 chill: action.homeData?.find(item => item.sectionId === 'hEditorTheme') || {},
-                new_release: action.homeData?.find(item => item.sectionType === 'new-release')?.items || null
-                
+                life_loving: action.homeData?.find(item => item.sectionId === 'hEditorTheme2') || {}
+            
             }
 
 

@@ -13,7 +13,7 @@ export const sidebarMenu = [
         icon: <BsDisc size={24}/>
     },
     {
-        path: 'zingchart',
+        path: 'zing_chart',
         text: '#zingchart',
         icon: <AiOutlineLineChart size={24}/>
     },
