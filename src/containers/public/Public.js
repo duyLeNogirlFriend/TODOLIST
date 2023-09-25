@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { SideBarLeft, SideBarRight, Player, Header } from '../../components'
-
+import Scrollbars from 'react-custom-scrollbars-2'
 
 const Public = () => {
   const [isShowRightSideBar, setIsShowRightSideBar] = useState(true)
@@ -17,12 +17,17 @@ const Public = () => {
               <div className='h-[70px] px-[60px] flex items-center mb-5'>
                 <Header />        
               </div>
-              <Outlet/> 
-              <div className='w-full h-[1000px]'></div>            
+              <div className='flex-auto w-full'>
+                <Scrollbars style={{width: '100%', height: 900}} autoHide>
+                    <Outlet/> 
+                <div className='h-[1000px]'></div>
+                </Scrollbars>
+              </div>
+                       
             </div>
             
             {isShowRightSideBar && 
-                  <div className='w-[330px] hidden 1600:flex flex-none animate-slide-right'>
+                  <div className='w-[330px] flex flex-none animate-slide-right'>
                       <SideBarRight/>
                   </div>
             }

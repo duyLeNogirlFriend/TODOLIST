@@ -70,7 +70,7 @@ const Player = ({setIsShowRightSideBar}) => {
                 if (audio.paused) {
                     return;
                   }
-                let percent = Math.round((audio.currentTime * 10000) / songInfo.duration) / 100
+                  let percent = Math.round((audio.currentTime / songInfo.duration) * 100);
                 setDuration(Math.round(audio.currentTime))
                 thubRef.current.style.cssText = `right: ${100 - percent}%`
             }, 200)
@@ -100,6 +100,10 @@ const Player = ({setIsShowRightSideBar}) => {
             audio.removeEventListener('ended', handleEnded)
         }
     }, [audio, isRepeated, isRandom])
+
+    useEffect(() => {
+        audio.volume = volume /100
+    }, [volume])
 
 
     const handleTooglePlay = () => {
@@ -154,21 +158,8 @@ const Player = ({setIsShowRightSideBar}) => {
     const handleRepeatClick = () => {
         audio.play()
     }
-    
-    // const handleClickMuted = () => {
-    //     if(!isMuted){
-    //         setVolume(0)
-    //         audio.volume = 0
-            
-    //     } else {
-    //         setVolume(volume)
-    //         audio.volume = volume / 100
-    //     }
-    // }
-    const handleChangeVolume = (e) => {
-        setVolume(e.target.value)
-        audio.volume = volume/100
-    }
+
+
     
   
 
@@ -234,11 +225,11 @@ const Player = ({setIsShowRightSideBar}) => {
         </div>
 
         <div className='w-[30%] flex-auto flex items-center justify-center'>
-            <span>
+            <span onClick={() => {setVolume(prev => +prev === 0 ? 70 : 0)}}>
                 {volume > 0 && volume <= 50? <FiVolume1/> : volume > 50? <FiVolume2/> :  <FiVolumeX/>   }
             </span>
 
-            <input type='range' step={1} min={0} max={100} value={volume} onChange={handleChangeVolume}
+            <input type='range' step={1} min={0} max={100} value={volume} onChange={(e) => {setVolume(e.target.value)}}
             />        
                 <span className='border-2 border-[#0e8080] p-2 rounded-md hover:bg-main-500 hover:text-white cursor-pointer '
                         onClick={() => setIsShowRightSideBar(prev => !prev)}
