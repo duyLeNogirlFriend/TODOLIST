@@ -5,6 +5,7 @@ import {LiaLongArrowAltLeftSolid, LiaLongArrowAltRightSolid, LiaRandomSolid} fro
 import {CiMusicNote1} from 'react-icons/ci'
 import {GoSearch} from 'react-icons/go'
 import {TbArrowsSort} from 'react-icons/tb'
+import {FiVolume1, FiVolume2,FiVolumeX} from 'react-icons/fi'
 const icons = {
     BsMusicNoteList,
     BsDisc,
@@ -25,7 +26,10 @@ const icons = {
     CiMusicNote1,
     TbArrowsSort,
     BsDot,
-    MdOutlineNavigateNext
+    MdOutlineNavigateNext,
+    FiVolume1,
+    FiVolume2,
+    FiVolumeX
     
 }
 export default icons;

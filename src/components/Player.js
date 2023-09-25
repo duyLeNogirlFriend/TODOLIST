@@ -5,7 +5,7 @@ import moment from 'moment'
 import * as apis from '../apis'
 import icons from '../utils/icons'
 import * as actions from '../store/actions'
-
+import LoadingSong from './LoadingSong'
 
 const {AiOutlineHeart,
     AiFillHeart, 
@@ -14,9 +14,9 @@ const {AiOutlineHeart,
     MdSkipNext,
     MdSkipPrevious,
     BsPlayCircle,
-    LiaRandomSolid, BsPauseCircle} = icons
+    LiaRandomSolid, BsPauseCircle, BsMusicNoteList, FiVolume1, FiVolume2, FiVolumeX} = icons
 
-const Player = () => {
+const Player = ({setIsShowRightSideBar}) => {
     const {currentSongId, isPlaying, atAlbum, songs } = useSelector(state => state.music)
     const [songInfo, setSongInfo] = useState(null)
 
@@ -25,6 +25,9 @@ const Player = () => {
     const [duration, setDuration] = useState(0)
     const [isRandom, setIsRandom] = useState(false)
     const [isRepeated, setIsRepeated] = useState(false)
+    const [isLoadingSource, setIsLoadingSource] = useState(true)
+    const [isMuted, setIsMuted] = useState(false)
+    const[volume, setVolume] = useState(70)
     const thubRef = useRef()
     const trackRef = useRef()
     const intervalId = useRef(null)
@@ -35,6 +38,7 @@ const Player = () => {
     //call api
     useEffect(() => {
         const fetchDetailSong = async () => {
+            setIsLoadingSource(false)
             const [res1, res2] = await Promise.all([
                 apis.getDetailInfoSong(currentSongId),
                 apis.getSong(currentSongId)
@@ -48,7 +52,8 @@ const Player = () => {
             }
             else{
                 alert('Can not play this song, please choose another one')             
-            }            
+            } 
+            setIsLoadingSource(true)           
         }
         fetchDetailSong();
     }, [currentSongId])
@@ -78,15 +83,23 @@ const Player = () => {
     }, [audio, isPlaying]) 
 
     useEffect( () => {
-        const handleEnded = () => {
-            handleNextClick()
+        const handleEnded = () => {       
+            if(isRepeated){
+                handleRepeatClick()
+            } 
+            else if (isRandom) {
+                handleRandomClick()
+            }
+            else {
+                handleNextClick()     
+            }
         }
         audio.addEventListener('ended', handleEnded)
 
         return () => {
             audio.removeEventListener('ended', handleEnded)
         }
-    }, [audio])
+    }, [audio, isRepeated, isRandom])
 
 
     const handleTooglePlay = () => {
@@ -130,19 +143,31 @@ const Player = () => {
     };
 
     //random click
-    const handleRandomClick = () => {
-        if(!isRandom){
+    const handleRandomClick = () => {    
             const randomIndex = Math.round(Math.random() * songs?.length) - 1
             dispatch(actions.setCurrentSongId(songs[randomIndex].encodeId))
-            actions.checkPlaying(true)
-        }
-        setIsRandom(!isRandom)
+            actions.checkPlaying(true)  
     }
     
 
     //repeat click 
     const handleRepeatClick = () => {
-        setIsRepeated(!isRepeated)
+        audio.play()
+    }
+    
+    // const handleClickMuted = () => {
+    //     if(!isMuted){
+    //         setVolume(0)
+    //         audio.volume = 0
+            
+    //     } else {
+    //         setVolume(volume)
+    //         audio.volume = volume / 100
+    //     }
+    // }
+    const handleChangeVolume = (e) => {
+        setVolume(e.target.value)
+        audio.volume = volume/100
     }
     
   
@@ -167,9 +192,9 @@ const Player = () => {
         </div>
 
         <div className='w-[40%] flex-auto flex items-center justify-center flex-col '>
-            <div className='flex justify-center gap-8 mb-3'>
+            <div className='flex justify-center gap-8 mb-3 items-center'>
                 <span title='Random' className={`cursor-pointer ${isRandom && 'text-main-500'} hover:text-main-500`}
-                    onClick={handleRandomClick}>
+                    onClick={() => setIsRandom(prev => !prev)}>
                     <LiaRandomSolid size={30}/>
                 </span>
                 <span title='Previous'  className={`${!songs? 'text-gray-500' : 'cursor-pointer hover:text-main-500' }`}
@@ -179,7 +204,9 @@ const Player = () => {
 
                 <span title='Play' className='cursor-pointer hover:text-main-500' 
                     onClick={handleTooglePlay}>
-                    {isPlaying? <BsPauseCircle size={30}/> : <BsPlayCircle size={30}/>}
+
+                    {!isLoadingSource? <LoadingSong/> : isPlaying? <BsPauseCircle size={30}/> : <BsPlayCircle size={30} />}
+                
                 </span>
 
                 <span title='Next' className={`${!songs? 'text-gray-500' : 'cursor-pointer hover:text-main-500' }`}
@@ -187,7 +214,7 @@ const Player = () => {
                     <MdSkipNext size={30}/>
                 </span>
                 <span title='Loop' className={`cursor-pointer ${isRepeated && 'text-main-500'} hover:text-main-500`}
-                    onClick={handleRepeatClick}>
+                    onClick={() => setIsRepeated(prev => !prev)}>
                     <BsRepeat size={30}/>
                 </span>
             </div>
@@ -206,8 +233,18 @@ const Player = () => {
             </div>
         </div>
 
-        <div className='w-[30%] flex-auto '>
-            Volume 
+        <div className='w-[30%] flex-auto flex items-center justify-center'>
+            <span>
+                {volume > 0 && volume <= 50? <FiVolume1/> : volume > 50? <FiVolume2/> :  <FiVolumeX/>   }
+            </span>
+
+            <input type='range' step={1} min={0} max={100} value={volume} onChange={handleChangeVolume}
+            />        
+                <span className='border-2 border-[#0e8080] p-2 rounded-md hover:bg-main-500 hover:text-white cursor-pointer '
+                        onClick={() => setIsShowRightSideBar(prev => !prev)}
+                >
+                    <BsMusicNoteList />
+                </span>       
         </div>
     </div>
   )
