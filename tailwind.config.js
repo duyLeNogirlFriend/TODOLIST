@@ -16,7 +16,7 @@ module.exports = {
         'main-100': '#e7ecec',  
         'main-200': '#dde4e4',
         'main-300': '#ced9d9',
-        'main-400': '#c0d8d8d',
+        'main-400': '#c0d8d8',
         'main-500': '#0e8080',
       },
 

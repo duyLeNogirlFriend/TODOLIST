@@ -165,7 +165,7 @@ const Player = ({setIsShowRightSideBar}) => {
 
 
     return (
-    <div className='px-5 h-full border flex'>
+    <div className='px-5 h-full flex'>
         <div className='w-[30%] flex-auto flex items-center gap-4'>
             <img  src={songInfo?.thumbnail} alt='thumbnail' className='w-16 h-16 object-cover rounded-md '/>
             <div className='flex flex-col'>

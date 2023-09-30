@@ -29,7 +29,8 @@ const icons = {
     MdOutlineNavigateNext,
     FiVolume1,
     FiVolume2,
-    FiVolumeX
+    FiVolumeX,
+ 
     
 }
 export default icons;

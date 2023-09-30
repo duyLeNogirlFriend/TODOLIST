@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import * as apis from '../../apis'
 import moment from 'moment/moment'
-import { Lists, AudioLoader } from '../../components'
+import { Lists, LoadingAudio } from '../../components'
 import Scrollbars from 'react-custom-scrollbars-2'
 import { useDispatch, useSelector } from 'react-redux'
 import * as actions from '../../store/actions'
@@ -19,11 +19,12 @@ const Album = () => {
 
   useEffect(() => {
     const fetchDetailPlaylist = async () => {
+      dispatch(actions.loading(true))
       const response = await apis.getDetailPlaylist(playlistId)
+      dispatch(actions.loading(false))
       if(response.data?.err === 0 ) {
         setPlayListData(response.data?.data)
         dispatch(actions.setPlayList(response?.data?.data?.song?.items))
-        
       }
     }
 
@@ -32,7 +33,8 @@ const Album = () => {
   
 
   return (
-    <div  className='flex gap-8 w-full px-[60px]'>
+    <div  className='flex gap-8 w-full px-[60px] relative'>
+
       <div className=' flex-none flex flex-col w-1/4  gap-1 items-center'>
 
         <div className='w-full relative overflow-hidden'>
@@ -42,7 +44,7 @@ const Album = () => {
           />
 
           <div className={`absolute top-0 bottom-0 right-0 left-0 flex items-center justify-center hover:bg-overlay-30 transition-all ease cursor-pointer ${isPlaying && 'rounded-full'}`}>
-            {isPlaying? <AudioLoader/> : <BsPlayCircle size={50} style={{ color: 'white' }}/>}
+            {isPlaying? <LoadingAudio/> : <BsPlayCircle size={50} style={{ color: 'white' }}/>}
           </div>
         </div>
 
