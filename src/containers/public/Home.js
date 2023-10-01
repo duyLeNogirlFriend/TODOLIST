@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux'
 
 const Home = () => {
 
-  const {chill,life_loving,remix,moody,popular_artist, top_100, album_hot} = useSelector(state => state.app)
+  const {chill,life_loving,remix,moody,popular_artist, top_100, album_hot, week_chart} = useSelector(state => state.app)
   
   return (
     <div className='overflow-y-auto '>   
