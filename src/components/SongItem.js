@@ -10,7 +10,6 @@ const {BsThreeDots} = icons
 
 const SongItem = ({data}) => {
   const dispatch = useDispatch()
-  const [isShowDots, setIsShowDots] = useState(false)
   const navigate = useNavigate()
 
   const handleClickSongItem = () => {
@@ -19,9 +18,7 @@ const SongItem = ({data}) => {
       dispatch(actions.setPlayList(null))
   }
   return (
-    <div className='w-[50%] min-[1224px]:w-[30%] flex items-center flex-auto p-[10px] gap-[10px] hover:bg-main-200 cursor-pointer mr-8 rounded-lg relative'
-    onMouseEnter={() => setIsShowDots(true)}
-    onMouseLeave={() => setIsShowDots(false)}
+    <div className='w-[50%] min-[1224px]:w-[30%] flex items-center flex-auto p-[10px] gap-[10px] hover:bg-main-200 cursor-pointer mr-8 rounded-lg relative group'
     onClick={handleClickSongItem}
     >
       <img className='w-16 h-16 object-cover rounded-md' src={data.thumbnail}></img>
@@ -37,9 +34,9 @@ const SongItem = ({data}) => {
         </span>
       </div>
       
-      {isShowDots && <span className='ml-auto'>
-                        <BsThreeDots/>
-                    </span>}
+      <span className='ml-auto opacity-0 group-hover:opacity-100'>
+          <BsThreeDots/>
+      </span>
       
     </div>
   )

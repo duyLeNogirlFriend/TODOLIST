@@ -32,7 +32,6 @@ const Player = ({setIsShowRightSideBar}) => {
     const trackRef = useRef()
     const intervalId = useRef(null)
     const dispatch = useDispatch()
-   
     
 
     //call api
@@ -45,6 +44,7 @@ const Player = ({setIsShowRightSideBar}) => {
             ])
             if(res1.data.err === 0 && res2.data.err !== -1110){
                 setSongInfo(res1.data.data)
+                
             }
             if(res2.data.err === 0){
                 audio.pause()     
