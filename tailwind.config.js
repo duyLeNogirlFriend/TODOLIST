@@ -84,6 +84,10 @@ module.exports = {
           'slide-left-2' : 'slide-right2 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;',
           'rotate-center': 'rotate-center 10s linear infinite',
           'rotate-center-pause': 'rotate-center-pause 0.5s linear 1 both'      
+        },
+        flex: {
+          '4' : '4 4 0%',
+          '6' : '6 6 0%'
         }
     },
     screens: {

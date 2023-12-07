@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Slider, Section, NewRelease } from '../../components'
+import { Header, Slider, Section, NewRelease, ChartSection } from '../../components'
 import * as apis from '../../apis'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
@@ -16,6 +16,7 @@ const Home = () => {
       <Section data={life_loving}/>
       <Section data={remix}/>
       <Section data={moody}/>
+      <ChartSection/>
       <Section data={popular_artist}/>
       <Section data={top_100}/>
       <Section data={album_hot}/>
@@ -26,6 +27,7 @@ const Home = () => {
           </Link>
         ))}
       </div>
+
     </div>
   )
 }
