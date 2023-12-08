@@ -13,6 +13,8 @@ const initState = {
     new_release: {},
     is_loading: false,
     week_chart: {},
+    chart: {},
+    rank: {},
 }
 const appReducer = (state = initState, action ) => { 
     switch(action.type) {
@@ -28,7 +30,9 @@ const appReducer = (state = initState, action ) => {
                 top_100: action.homeData?.find(item => item.sectionId === 'h100') || {},
                 album_hot: action.homeData?.find(item => item.sectionId === 'hAlbum') || {},
                 new_release: action.homeData?.find(item => item.sectionType === 'new-release') || {},
-                week_chart: action.homeData?.find(item => item.sectionType === 'weekChart')?.items || {}
+                week_chart: action.homeData?.find(item => item.sectionType === 'weekChart')?.items || {},
+                chart: action.homeData?.find(item => item.sectionType === 'RTChart')?.chart|| {},
+                rank: action.homeData?.find(item => item.sectionType === 'RTChart')?.items || {}
             }
         case actionType.LOADING: 
             return{
