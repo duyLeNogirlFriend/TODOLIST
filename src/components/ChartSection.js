@@ -61,10 +61,10 @@ export const ChartSection = () => {
     return (
         <div className='px-[60px] mt-12 relative'>
             <img src='https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltc6b8d1b17359093d/6543eb10195164001b5ba96e/RG_REMIX-RUMBLE_GAMEPLAY-OVERVIEW-ARTICLE_BANNER-IMAGE_1920X1080.jpg'
-                 className='w-full object-cover rounded-md max-h-[350px]'></img>
+                 className='w-full object-cover rounded-md max-h-[430px]'></img>
             <div className='absolute top-0 left-[60px] right-[60px] bottom-0 bg-[rgba(48,138,134,0.9)] '></div>
         
-            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 p-5 flex flex-col' >
+            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 p-5 flex flex-col gap-8' >
                 <h3 className='text-2xl font-bold text-white'>
                     #zingchart
                 </h3>
@@ -78,7 +78,7 @@ export const ChartSection = () => {
                                     artists={item.artistsNames}
                                     key={item.encodeId} 
                                     order = {index + 1}
-                                    percent={Math.round(item.score / chart?.totalScore)}
+                                    percent={Math.round(item.score * 100/ chart?.totalScore)}
                                     />
         
                             </div>

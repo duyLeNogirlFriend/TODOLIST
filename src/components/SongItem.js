@@ -19,7 +19,7 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
       dispatch(actions.setPlayList(null))
   }
   return (
-    <div className='w-full flex items-center flex-auto p-[10px] gap-[10px] hover:bg-main-200 cursor-pointer mr-8 rounded-lg relative group' 
+    <div className={`  w-full flex items-center flex-auto p-[10px] gap-[10px] ${order ? 'hover:bg-main-500 ' : 'hover:bg-main-200'}  cursor-pointer rounded-lg relative group ${order?'text-white' : 'text-black'}`}
     onClick={handleClickSongItem}
     >
       {order && <span>{order}</span>}
@@ -28,7 +28,7 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
         <span className='font-semibold'>
           {title?.length > 30? `${title.slice(0,30)}...` : title}
         </span>
-        <span className='text-gray-500 text-sm'>
+        <span className={`text-sm ${order ? 'text-white' : 'text-gray-500'}`}>
           {artists}
         </span>
         { releaseDate && 
@@ -36,12 +36,14 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
             {moment(releaseDate * 1000).fromNow()}
           </span>
         }
-
       </div>
-      {percent &&  <span>{percent}</span>}
-      <span className='ml-auto opacity-0 group-hover:opacity-100'>
-          <BsThreeDots/>
-      </span>
+      {percent && <span className='ml-auto'>{percent}%</span>}
+
+      {releaseDate &&
+        <span className='ml-auto opacity-0 group-hover:opacity-100'>
+            <BsThreeDots/>
+        </span>
+      }
 
     </div>
   )
