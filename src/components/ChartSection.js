@@ -3,58 +3,84 @@ import bg from '../assets/bg.jpg'
 import { Line} from 'react-chartjs-2'
 import { Chart,  registerables} from 'chart.js'
 import { useSelector } from 'react-redux'
-
+import {SongItem} from './'
 
 export const ChartSection = () => {
     const [data, setData] = useState(null)
     const {chart, rank} = useSelector(state => state.app)
-    console.log("chart", chart, "rank", rank)
     useEffect(() => {
-        const labels = chart?.times?.filter(item => +item.hour % 2 === 0)?.map(item => item.hour)
+        const labels = chart?.times?.filter(item => +item.hour % 2 === 0)?.map(item => `${item.hour}:00`)
         const datasets = []
         if(chart?.items){
             for(let i = 0; i < 3; i++ ){
                 datasets.push({
-                    data: chart?.items[Object.keys(chart?.items)[i]]?.filter(item => +item % 2 === 0)?.map(item => item.counter) 
+                    data: chart?.items[Object.keys(chart?.items)[i]]?.filter(item => +item.hour % 2 === 0)?.map(item => item.counter),
+                    borderColor: i === 0 ? '#4a90e2' : i === 1 ? '#50e3c2' : '#e35050', 
+                    tension : 0.2,
+                    borderWidth: 2,
+                    pointBackgroundColor: 'white',
+                    pointHoverRadius: 5,
+                    pointHitRadius: 5,
+                    pointBorderColor: i === 0 ? '#4a90e2' : i === 1 ? '#50e3c2' : '#e35050', 
+                    animation: false,
+                    pointHoverBorderWidth: 5
                 })
             }
             setData({labels, datasets})
         }
+        console.log(datasets)
     }, [chart])
     
     const options = {
         responsive: true,
         pointRadius: 0,
+        maintainAspectRatio: false,
         aspectRatio: 4,
         scales: {
             y: {
                 ticks: { display: false },
-                grid: { borderDash: [1, 4], color: 'gray' }
+                grid: {color: 'rgba(255,255,255,0.1', drawTicks: false} ,
+                min: chart?.minScore,
+                max: chart?.maxScore,
+                border:{dash: [3,4]}
             },
             x: {
-                ticks: { color: 'blue' },
+                ticks: { color: 'white' },
                 grid: { color: 'transparent' }
             }
         },
         plugins: {
             legend: false
+        },
+        hover: {
+            mode: 'dataset',
+            intersect: false
         }
     };
     Chart.register(...registerables);
     return (
-        <div className='px-[60px] mt-12 border border-red-500 relative'>
-            <img src={bg} className='w-full object-contain rounded-md ' ></img>
-            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 bg-gradient-to-r from-cyan-500 to-[#0e8080] opacity-[80%]'></div>
-            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 p-5'>
+        <div className='px-[60px] mt-12 relative'>
+            <img src='https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltc6b8d1b17359093d/6543eb10195164001b5ba96e/RG_REMIX-RUMBLE_GAMEPLAY-OVERVIEW-ARTICLE_BANNER-IMAGE_1920X1080.jpg'
+                 className='w-full object-cover rounded-md max-h-[350px]'></img>
+            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 bg-[rgba(48,138,134,0.9)] '></div>
+        
+            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 p-5 flex flex-col' >
                 <h3 className='text-2xl font-bold text-white'>
                     #zingchart
                 </h3>
-                <div className='flex'> 
-                    <div className='flex-4 border border-red-500'>Rank</div>
-                    <div className='flex-6 border border-yellow-500'> 
+                <div className='flex gap-4 h-full'> 
+                    {/* <div className='flex flex-col flex-3 '>
+                        {rank?.filter((i,index) => index < 3)?.map(item => (
+                            <SongItem
+                            data={
+                                item
+                            }
+                            />
+                        ))}
+                    </div> */}
+                    <div className='flex-7 h-full'> 
                         {data && <Line data={data} options={options}  />}
                     </div>
-                       
                 </div>
             </div>
         </div>
