@@ -69,15 +69,22 @@ export const ChartSection = () => {
                     #zingchart
                 </h3>
                 <div className='flex gap-4 h-full'> 
-                    {/* <div className='flex flex-col flex-3 '>
-                        {rank?.filter((i,index) => index < 3)?.map(item => (
-                            <SongItem
-                            data={
-                                item
-                            }
-                            />
+                    <div className='flex flex-col flex-3 '>
+                    {Array.isArray(rank) && rank.length > 0 && rank.filter((i,index) => index < 3)?.map((item,index) => (
+                            <div className='flex items-center'>
+                                    <SongItem
+                                    thumbnail={item.thumbnail}
+                                    title={item.title}
+                                    artists={item.artistsNames}
+                                    key={item.encodeId} 
+                                    order = {index + 1}
+                                    percent={Math.round(item.score / chart?.totalScore)}
+                                    />
+        
+                            </div>
                         ))}
-                    </div> */}
+
+                    </div>
                     <div className='flex-7 h-full'> 
                         {data && <Line data={data} options={options}  />}
                     </div>

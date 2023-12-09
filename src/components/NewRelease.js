@@ -13,7 +13,6 @@ const NewRelease = () => {
     useEffect(() => {
         isActive === 0 ? setSongs(new_release?.items?.all) : isActive === 1 ? setSongs(new_release?.items?.vPop) : setSongs(new_release?.items?.others)
     },[isActive, new_release])
-    console.log(songs[0].title)
   return (
     <div className='mt-12 px-[60px] flex flex-col gap-5'>
         <div className='flex items-center justify-between'>
@@ -48,9 +47,9 @@ const NewRelease = () => {
             
         </div>
 
-        <div className='flex flex-wrap w-full '> 
-            <div>
+        <div className='flex flex-wrap w-full justify-between'> 
                 {songs?.map(item => (
+            <div className='w-[45%] min-[1024px]: w-[30%] '>
                     <SongItem key={item.encodeId} 
                               thumbnail = {item.thumbnail}
                               title = {item.title}
@@ -58,8 +57,8 @@ const NewRelease = () => {
                               releaseDate = {item.releaseDate}
                               encodeId = {item.encodeId}
                     />
-                ))}
             </div>
+                ))}
         </div>
         
     </div>
