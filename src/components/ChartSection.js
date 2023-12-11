@@ -1,4 +1,4 @@
-import React, {memo, useState, useEffect} from 'react'
+import React, {memo, useState, useEffect,useRef} from 'react'
 import bg from '../assets/bg.jpg'
 import { Line} from 'react-chartjs-2'
 import { Chart,  registerables} from 'chart.js'
@@ -80,12 +80,11 @@ export const ChartSection = () => {
                                     order = {index + 1}
                                     percent={Math.round(item.score * 100/ chart?.totalScore)}
                                     />
-        
                             </div>
                         ))}
 
                     </div>
-                    <div className='flex-7 h-full'> 
+                    <div className='flex-7 h-[90%]'> 
                         {data && <Line data={data} options={options}  />}
                     </div>
                 </div>

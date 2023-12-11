@@ -19,10 +19,10 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
       dispatch(actions.setPlayList(null))
   }
   return (
-    <div className={`  w-full flex items-center flex-auto p-[10px] gap-[10px] ${order ? 'hover:bg-main-500 ' : 'hover:bg-main-200'}  cursor-pointer rounded-lg relative group ${order?'text-white' : 'text-black'}`}
+    <div className={`  mt-2 w-full flex items-center flex-auto p-[10px] gap-[10px] ${order ? 'hover:bg-main-500  bg-[rgba(215,219,216,0.5)]' : 'hover:bg-main-200'}  cursor-pointer rounded-lg relative group ${order?'text-white' : 'text-black'}`}
     onClick={handleClickSongItem}
     >
-      {order && <span>{order}</span>}
+      {order && <span className={`${order <= 3 ? 'text-white text-[40px]' : ' ' } `}>{order}</span>}
       <img className='w-16 h-16 object-cover rounded-md' src={thumbnail}></img>
       <div className={`flex flex-col ${order? 'text-white' : 'text-gray-700'} `}>
         <span className='font-semibold'>
