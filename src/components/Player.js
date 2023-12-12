@@ -70,7 +70,7 @@ const Player = ({setIsShowRightSideBar}) => {
                 if (audio.paused) {
                     return;
                   }
-                  let percent = Math.round((audio.currentTime / songInfo.duration) * 100);
+                  let percent = Math.round((audio.currentTime / songInfo?.duration) * 100);
                 setDuration(Math.round(audio.currentTime))
                 thubRef.current.style.cssText = `right: ${100 - percent}%`
             }, 200)
