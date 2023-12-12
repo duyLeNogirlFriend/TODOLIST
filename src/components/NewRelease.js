@@ -13,7 +13,6 @@ const NewRelease = () => {
     useEffect(() => {
         isActive === 0 ? setSongs(new_release?.items?.all) : isActive === 1 ? setSongs(new_release?.items?.vPop) : setSongs(new_release?.items?.others)
     },[isActive, new_release])
-    console.log(songs[0].title)
   return (
     <div className='mt-12 px-[60px] flex flex-col gap-5'>
         <div className='flex items-center justify-between'>

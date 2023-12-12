@@ -43,5 +43,4 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
     </div>
   )
 }
-
 export default memo(SongItem)
