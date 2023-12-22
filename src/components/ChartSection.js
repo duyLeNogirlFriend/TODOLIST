@@ -4,10 +4,21 @@ import { Line} from 'react-chartjs-2'
 import { Chart,  registerables} from 'chart.js'
 import { useSelector } from 'react-redux'
 import {SongItem} from './'
+import _ from 'lodash'
 
 export const ChartSection = () => {
     const [data, setData] = useState(null)
     const {chart, rank} = useSelector(state => state.app)
+    const chartRef = useRef()
+    const [selected, setSelected] = useState(null)
+    const selectedRankItem = Array.isArray(rank)
+    ? rank.find(i => i.encodeId === selected)
+    : null;
+    const [tooltipState, setTooltipState] = useState({
+        opacity: 0,
+        top: 0,
+        left: 0
+    })
     useEffect(() => {
         const labels = chart?.times?.filter(item => +item.hour % 2 === 0)?.map(item => `${item.hour}:00`)
         const datasets = []
@@ -50,7 +61,33 @@ export const ChartSection = () => {
             }
         },
         plugins: {
-            legend: false
+            legend: false,
+            tooltip: {
+                enabled: false,
+                external:({tooltip}) => {
+                    if(!chartRef || !chartRef.current) return 
+                    if(tooltip.opacity === 0 ){
+                        if(tooltipState.opacity !== 0 ) setTooltipState(prev => ({...prev,opacity: 0}))
+                        return
+                    }
+                    const counters = []
+                    for(let i = 0;i < 3; i++){
+                        counters.push({
+                            data: chart?.items[Object.keys(chart?.items)[i]]?.filter(item => +item.hour % 2 === 0)?.map(item => item.counter),
+                            encodeid: Object.keys(chart?.items)[i] 
+
+                        })
+                    }
+                    const result = counters.find(i => i.data.some(n => n=== +tooltip.body[0]?.lines[0]?.replace(',', '')))
+                    setSelected(result.encodeId)
+                    const newTooltipData = {
+                        opacity: 1,
+                        left: tooltip.caretX,
+                        top: tooltip.caretY,
+                    }
+                    if(!_.isEqual(tooltip,newTooltipData)) setTooltipState(newTooltipData)
+                }
+            }
         },
         hover: {
             mode: 'dataset',
@@ -84,8 +121,16 @@ export const ChartSection = () => {
                         ))}
 
                     </div>
-                    <div className='flex-7 h-[90%]'> 
-                        {data && <Line data={data} options={options}  />}
+                    <div className='flex-7 h-[90%] relative'> 
+                        {data && <Line data={data} ref={chartRef} options={options}  />}
+                        <div className='tooltip' style={{top: tooltipState.top, left: tooltipState.left, opacity:tooltipState.opacity, position: 'absolute'}}>
+                            <SongItem
+        thumbnail={selectedRankItem?.thumbnail}
+        title={selectedRankItem?.title}
+        artists={selectedRankItem?.artistsNames}
+        key={selectedRankItem?.encodeId}
+    />
+                        </div>
                     </div>
                 </div>
             </div>
