@@ -18,6 +18,7 @@ const Album = () => {
 
 
   useEffect(() => {
+    dispatch(actions.setCurrentAlbumId(playlistId))
     const fetchDetailPlaylist = async () => {
       dispatch(actions.loading(true))
       const response = await apis.getDetailPlaylist(playlistId)
@@ -27,15 +28,14 @@ const Album = () => {
         dispatch(actions.setPlayList(response?.data?.data?.song?.items))
       }
     }
-
     fetchDetailPlaylist()
   }, [playlistId])
   
 
   return (
-    <div  className='flex gap-8 w-full px-[60px] relative'>
+    <div className='flex gap-8 w-full px-[60px] relative'>
 
-      <div className=' flex-none flex flex-col w-1/4  gap-1 items-center'>
+      <div className='flex-none flex flex-col w-1/4  gap-1 items-center'>
 
         <div className='w-full relative overflow-hidden'>
 
@@ -65,7 +65,7 @@ const Album = () => {
             <span>{ playListData.sortDescription}</span>
           </span>
           <div>
-            <Lists  totalDuration ={playListData?.song?.totalDuration}/>                   
+            <Lists totalDuration ={playListData?.song?.totalDuration}/>                   
           </div>
       </Scrollbars>
       </div>

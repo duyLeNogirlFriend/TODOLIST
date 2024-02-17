@@ -6,6 +6,7 @@ import {CiMusicNote1} from 'react-icons/ci'
 import {GoSearch} from 'react-icons/go'
 import {TbArrowsSort} from 'react-icons/tb'
 import {FiVolume1, FiVolume2,FiVolumeX} from 'react-icons/fi'
+import { IoTrashBinOutline } from "react-icons/io5";
 const icons = {
     BsMusicNoteList,
     BsDisc,
@@ -30,6 +31,8 @@ const icons = {
     FiVolume1,
     FiVolume2,
     FiVolumeX,
+    IoTrashBinOutline
+    
  
     
 }

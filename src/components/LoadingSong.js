@@ -4,13 +4,13 @@ import { memo } from 'react'
 
 const LoadingSong = () => {
   return (
-        <RotatingLines
+  <RotatingLines
     strokeColor="grey"
     strokeWidth="2"
     animationDuration="0.75"
     width="20"
     visible={true}
-/>
+  />
   )
 }
 
