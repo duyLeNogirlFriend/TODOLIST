@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux'
 
 const Public = () => {
   const [isShowRightSideBar, setIsShowRightSideBar] = useState(false)
-
-  console.log(isShowRightSideBar)
   const {isLoading} = useSelector(state => state.app)
   return (
     <div className='w-full min-h-screen flex flex-col bg-main-300'>

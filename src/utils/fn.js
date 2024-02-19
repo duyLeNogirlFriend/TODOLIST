@@ -11,3 +11,11 @@ export const getArrSlider = (start, end, number) => {
     }
     return output
 }
+
+export const handleNumber = (num) => {
+    if (num >= Math.pow(10, 6)) {
+        return `${Math.round(num / Math.pow(10, 6))}M`;
+    } else {
+        return `${Math.round(num / Math.pow(10, 3))}K`;
+    }
+};

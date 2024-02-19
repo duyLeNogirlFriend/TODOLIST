@@ -43,6 +43,30 @@ export const setRecentSongs = (songData) => ({
     songData
 })
 
+// thunk for api
+export const search = (keyword) => async (dispatch) => {
+    try{
+        const res = await apis.search(keyword)
+        if(res.data.err === 0) {
+            dispatch({
+                type: actionType.SEARCH,
+                data: res.data.data
+            })
+        } else {
+            dispatch({
+                type: actionType.SEARCH,
+                data: null
+            })
+        }
+    } catch (err) {
+        dispatch({
+            type: actionType.SEARCH,
+            data: null
+        })
+    }
+}
+
+
 // export const fetchDetailPlaylist = (playListId) =>async (dispatch) => {
 //     try{
 //         const response = await apis.getDetailPlaylist(playListId)

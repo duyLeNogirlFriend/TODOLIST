@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import icons from '../utils/icons'
 import { search } from '../apis'
+import { useDispatch } from 'react-redux'
+import { createSearchParams, useNavigate } from 'react-router-dom'
+import * as actions from '../store/actions'
+import path from '../utils/paths'
+import { create } from 'lodash'
+
+
 
 const {GoSearch} = icons
-
-
 const Search = () => {
   const [keyword, setKeyword] = useState('')
-
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const handleSearch = async (e) => {
     if(e.keyCode === 13) {
-      const res = await search(keyword)
-      console.log(res)
+      dispatch(actions.search(keyword))
+      navigate({
+        pathname: `${path.SEARCH}/${path.ALL}`,
+        search: createSearchParams({
+          q: keyword
+        }).toString()
+
+      })
     }
   }
   return (
