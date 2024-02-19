@@ -44,7 +44,7 @@ const Player = ({setIsShowRightSideBar}) => {
             ])
             if(res1.data.err === 0 && res2.data.err !== -1110){
                 setSongInfo(res1.data.data)
-                
+                dispatch(actions.setCurrentSongData(res1.data.data))
             }
             if(res2.data.err === 0){
                 audio.pause()     
@@ -57,6 +57,11 @@ const Player = ({setIsShowRightSideBar}) => {
         }
         fetchDetailSong();
     }, [currentSongId])
+
+    const handleCloseSideBar = () => {
+        setIsShowRightSideBar((prev) => !prev);
+       
+    }
  
 
     useEffect(() => {
@@ -196,7 +201,7 @@ const Player = ({setIsShowRightSideBar}) => {
                 <span title='Play' className='cursor-pointer hover:text-main-500' 
                     onClick={handleTooglePlay}>
 
-                    {!isLoadingSource? <LoadingSong/> : isPlaying? <BsPauseCircle size={30}/> : <BsPlayCircle size={30} />}
+                    {!isLoadingSource ? <LoadingSong/> : isPlaying ? <BsPauseCircle size={30}/> : <BsPlayCircle size={30} />}
                 
                 </span>
 
@@ -232,7 +237,7 @@ const Player = ({setIsShowRightSideBar}) => {
             <input type='range' step={1} min={0} max={100} value={volume} onChange={(e) => {setVolume(e.target.value)}}
             />        
                 <span className='border-2 border-[#0e8080] p-2 rounded-md hover:bg-main-500 hover:text-white cursor-pointer '
-                        onClick={() => setIsShowRightSideBar(prev => !prev)}
+                        onClick={handleCloseSideBar}
                 >
                     <BsMusicNoteList />
                 </span>       

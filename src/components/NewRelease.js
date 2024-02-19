@@ -48,8 +48,8 @@ const NewRelease = () => {
         </div>
 
         <div className='flex flex-wrap w-full justify-between'> 
-                {songs?.map(item => (
-            <div className='w-[45%] min-[1024px]: w-[30%] '>
+                {songs?.map((item, index) => (
+            <div className='w-[45%] min-[1024px]: w-[30%]' key={index}>
                     <SongItem key={item.encodeId} 
                               thumbnail = {item.thumbnail}
                               title = {item.title}

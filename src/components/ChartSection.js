@@ -4,10 +4,21 @@ import { Line} from 'react-chartjs-2'
 import { Chart,  registerables} from 'chart.js'
 import { useSelector } from 'react-redux'
 import {SongItem} from './'
+import _ from 'lodash'
 
 export const ChartSection = () => {
     const [data, setData] = useState(null)
     const {chart, rank} = useSelector(state => state.app)
+    const chartRef = useRef()
+    const [selected, setSelected] = useState(null)
+    const selectedRankItem = Array.isArray(rank)
+    ? rank.find(i => i.encodeId === selected)
+    : null;
+    const [tooltipState, setTooltipState] = useState({
+        opacity: 0,
+        top: 0,
+        left: 0
+    })
     useEffect(() => {
         const labels = chart?.times?.filter(item => +item.hour % 2 === 0)?.map(item => `${item.hour}:00`)
         const datasets = []
@@ -28,7 +39,6 @@ export const ChartSection = () => {
             }
             setData({labels, datasets})
         }
-        console.log(datasets)
     }, [chart])
     
     const options = {
@@ -50,7 +60,32 @@ export const ChartSection = () => {
             }
         },
         plugins: {
-            legend: false
+            legend: false,
+            tooltip: {
+                enabled: false,
+                external:({tooltip}) => {
+                    if(!chartRef || !chartRef.current) return 
+                    if(tooltip.opacity === 0 ){
+                        if(tooltipState.opacity !== 0 ) setTooltipState(prev => ({...prev,opacity: 0}))
+                        return
+                    }
+                    const counters = []
+                    for(let i = 0;i < 3; i++){
+                        counters.push({
+                            data: chart?.items[Object.keys(chart?.items)[i]]?.filter(item => +item.hour % 2 === 0)?.map(item => item.counter),
+                            encodeId: Object.keys(chart?.items)[i] 
+                        })
+                    }
+                    const result = counters.find(i => i.data.some(n => n=== +tooltip.body[0]?.lines[0]?.replace(',', '')))
+                    setSelected(result.encodeId)
+                    const newTooltipData = {
+                        opacity: 1,
+                        left: tooltip.caretX,
+                        top: tooltip.caretY,
+                    }
+                    if(!_.isEqual(tooltip,newTooltipData)) setTooltipState(newTooltipData)
+                }
+            }
         },
         hover: {
             mode: 'dataset',
@@ -58,20 +93,17 @@ export const ChartSection = () => {
         }
     };
     Chart.register(...registerables);
+
     return (
-        <div className='px-[60px] mt-12 relative'>
-            <img src='https://images.contentstack.io/v3/assets/blt731acb42bb3d1659/bltc6b8d1b17359093d/6543eb10195164001b5ba96e/RG_REMIX-RUMBLE_GAMEPLAY-OVERVIEW-ARTICLE_BANNER-IMAGE_1920X1080.jpg'
-                 className='w-full object-cover rounded-md max-h-[430px]'></img>
-            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 bg-[rgba(48,138,134,0.9)] '></div>
-        
-            <div className='absolute top-0 left-[60px] right-[60px] bottom-0 p-5 flex flex-col gap-8' >
+        <div className='px-[60px] mt-12 relative color-red-500 h-[400px] '>        
+            <div className='bg-[rgba(57,9,84,0.82)] rounded absolute top-0 left-[60px] right-[60px] bottom-0 p-5 flex flex-col gap-8 overflow-auto' >
                 <h3 className='text-2xl font-bold text-white'>
-                    #zingchart
+                    #ZingChart
                 </h3>
                 <div className='flex gap-4 h-full'> 
                     <div className='flex flex-col flex-3 '>
                     {Array.isArray(rank) && rank.length > 0 && rank.filter((i,index) => index < 3)?.map((item,index) => (
-                            <div className='flex items-center'>
+                            <div className='flex items-center' key={index}>
                                     <SongItem
                                     thumbnail={item.thumbnail}
                                     title={item.title}
@@ -79,13 +111,25 @@ export const ChartSection = () => {
                                     key={item.encodeId} 
                                     order = {index + 1}
                                     percent={Math.round(item.score * 100/ chart?.totalScore)}
+                                    style = 'text-white hover:bg-[#945ea7]'
+                                    encodeId={item.encodeId}
                                     />
                             </div>
                         ))}
 
                     </div>
-                    <div className='flex-7 h-[90%]'> 
-                        {data && <Line data={data} options={options}  />}
+                    <div className='flex-7 h-[90%] relative'> 
+                        {data && <Line data={data} ref={chartRef} options={options}  />}
+                        <div className='tooltip w-[30%] text-[#333]' style={{top: tooltipState.top, left: tooltipState.left, opacity: tooltipState.opacity, position: 'absolute'}}>
+                            <SongItem
+                                thumbnail= {Array.isArray(rank) && rank?.find(item => item.encodeId === selected)?.thumbnail}
+                                title= {Array.isArray(rank) && rank?.find(item => item.encodeId === selected)?.title}
+                                artists= {Array.isArray(rank) && rank?.find(item => item.encodeId === selected)?.artistNames}
+                                percent= {Array.isArray(rank) && rank?.find(item => item.encodeId === selected)?.artistNames}
+                                key= {Array.isArray(rank) && rank?.find(item => item.encodeId === selected)?.encodeId}
+                                style = 'bg-white'
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

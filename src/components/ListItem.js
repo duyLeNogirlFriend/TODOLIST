@@ -3,16 +3,18 @@ import icons from '../utils/icons';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import * as actions from '../store/actions'
+import { act } from 'react-dom/test-utils';
 
 const {CiMusicNote1} = icons
 const ListItem = ({songData}) => {
   const dispatch = useDispatch()
   return (
-    <div className='flex justify-between items-center p-[10px] border-b border-[rgba(0,0,0,0.05)] hover:bg-[#dde4e4] cursor-pointer'
+    <div className='flex justify-around gap-16 items-center p-[10px] border-b border-[rgba(0,0,0,0.05)] hover:bg-[#dde4e4] cursor-pointer'
         onClick={() => {
             dispatch(actions.setCurrentSongId(songData?.encodeId))
             dispatch(actions.checkPlaying(true))
             dispatch(actions.checkIsAtAlbum(true))
+            dispatch(actions.setRecentSongs({title : songData.title, thumbnail : songData.thumbnail, artists : songData.artistsNames, encodeId : songData.encodeId}))
             }}>
         <div className='flex items-center gap-3 flex-1'> 
             <span>
@@ -25,7 +27,7 @@ const ListItem = ({songData}) => {
             </span>
         </div>
 
-        <div className='flex-1 flex items-center justify-center font-semibold'>
+        <div className='flex-1 w-[50%] flex items-center justify-center font-semibold '>
             {songData?.album?.title}
         </div>
 

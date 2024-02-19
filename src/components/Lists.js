@@ -9,7 +9,7 @@ const {TbArrowsSort, BsDot} = icons
 const Lists = ({totalDuration}) => {
   const {songs} = useSelector(state => state.music)
   return (
-    <div className='flex flex-col w-full text-xs px-[10px] text-gray-600'>
+    <div className='flex flex-col w-full text-xs px-[10px] text-gray-600 mb-20'>
         <div className='flex items-center justify-between font-semibold px-[10px] mt-4 border-b border-[rgba(0,0,0,0.05)] py-3'>
             <span className='flex items-center gap-3'>
               <span className='border border-gray-500 rounded-[5px] p-[2px]'>

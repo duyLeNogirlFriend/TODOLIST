@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 @import 'swiper/css';
+
+body {
+    user-select: none;
+    overflow: hidden;
+}
