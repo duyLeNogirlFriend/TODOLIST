@@ -1,5 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import Scrollbars from 'react-custom-scrollbars-2'
 const Search = () => {
   return (
     <div>
@@ -13,9 +14,9 @@ const Search = () => {
         <span>MV</span>
       </div>
     </div>
-      <div>
-        <Outlet/>
-      </div>
+    <Scrollbars style={{ width: '100%', height: 900 }} autoHide>
+              <Outlet />
+    </Scrollbars>
     </div>
   )
 }
