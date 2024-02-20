@@ -1,13 +1,13 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import SectionItem from '../../components/SectionItem'
 import { handleNumber } from '../../utils/fn'
 import moment from 'moment'
 const SearchAll = () => {
   const searchData = useSelector((state) => state.music.searchData)
   console.log(searchData)
   return (
-    <div className='px-[60px] overflow-auto pb-[400px]'>
-
+    <div className='px-[60px] overflow-auto pb-[400px]'>  
       <div className='my-8'>
         <span className='font-bold text-lg'>Top</span>
         <div className='flex w-[30%] p-4 rounded mt-6'>
@@ -41,12 +41,21 @@ const SearchAll = () => {
         </div>
       </div>
 
-      <div>
-        <span>Artists/OA</span>
+      <div className='mt-12'>
+        <span className='font-bold text-lg'>Playlist/Album</span>
+        <div className='flex w-full gap-4'>
+          {searchData?.playlists?.slice(0,5).map((item) => (
+            <SectionItem data={item}/>
+          ))}
+        </div>
+      </div>
+
+      <div className='mt-12'>
+        <span className='font-bold text-lg'>Artists/OA</span>
         <div className='flex w-full'>
-          {searchData?.artists?.map((item) => (
+          {searchData?.artists?.slice(0,5).map((item) => (
             <div className='w-[20%] flex flex-col justify-centet items-center' key={item.encodeId}>
-              <img className='w-[40%] h-[40%] rounded-[100%] object-cover' src={item.thumbnail} />
+              <img className='w-[40%y] h-[40%] rounded-[100%] object-cover' src={item.thumbnail} />
               <span>{item.name}</span>
               <span>{handleNumber(item.totalFollow)} followers</span>
               <button>About</button>
