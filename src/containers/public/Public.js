@@ -18,7 +18,7 @@ const Public = () => {
         <div className='relative flex-auto'>
           <div className=' h-[70px] px-[60px] flex items-center mb-5'>
             {isLoading &&
-              <div className='absolute top-0 bottom-0 left-0 right-0 w-full flex items-center justify-center bg-main-300 border border-blue-500 z-10'>
+              <div className='absolute top-0 bottom-0 left-0 right-0 w-full flex items-center justify-center bg-main-300 z-10'>
                 <LoadingPage />
               </div>}
                 <Header />

@@ -31,6 +31,7 @@ const Search = () => {
     <div className='flex items-center'>
         <input type='text' className='outline-none bg-[#dde4e4] px-4 py-2 rounded-tl-[20px] rounded-bl-[20px] w-full'
               placeholder='Search songs, authors, music lyric... '
+              spellCheck= 'false'
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               onKeyUp={handleSearch}>

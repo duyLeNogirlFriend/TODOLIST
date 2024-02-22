@@ -29,7 +29,7 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
     >
       {order && <span className={`${order <= 3 ? 'text-white text-[40px]' : ' ' } `}>{order}</span>}
       <div className='relative group'>
-        <img className= {` ${!sm? 'w-16 h-16' : 'w-10 h-10'} object-cover rounded-md `} src={thumbnail}></img>
+        <img className= {` ${!sm? 'w-16 h-16' : 'w-10 h-10'} object-cover rounded-md`} src={thumbnail}></img>
         <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center
                          '>
           <div className='opacity-0 group-hover:opacity-100 duration-300 '>
@@ -60,7 +60,6 @@ const SongItem = ({thumbnail, title, artists, releaseDate, encodeId, order, perc
             <BsThreeDots/>
         </span>
       }
-
     </div>
   )
 }
